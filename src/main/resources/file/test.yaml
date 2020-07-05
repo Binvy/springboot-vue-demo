@@ -1,0 +1,11 @@
+---
+MediaItem:
+  Content:
+    name: "content"
+    id: "content"
+    class: "java.lang.String"
+  Images:
+  - name: "image"
+    id: "image"
+  - name: "image"
+    id: "image"

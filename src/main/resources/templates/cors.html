@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta http-equiv="Access-Control-Allow-Origin" charset="UTF-8">-->
+    <title>cors test</title>
+    <script type="text/javascript" src="../static/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+    <div id="contentDiv"></div>
+    <div id="deleteResult"></div>
+    <input type="button" value="提交数据" onclick="getData()" />
+    <input type="button" value="删除数据" onclick="deleteData()" />
+    <script>
+        function getData () {
+            console.log('get data');
+            $.ajax({
+                url: 'http://localhost:8080/cors/add',
+                type: 'post',
+                data: {name: 'Thinking in Java'},
+                success: function (msg) {
+                    $('#contentDiv').html(msg);
+                },
+                fail: function(error) {
+                    console.log(error);
+                }
+            })
+        };
+        function deleteData() {
+            console.log('delete data');
+            $.ajax({
+                url: 'http://localhost:8080/cors/999',
+                type: 'delete',
+                success: function (msg) {
+                    $('#deleteResult').html(msg);
+                },
+                fail: function(error) {
+                    console.log(error);
+                }
+            })
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<MediaItem id="mediaItem">
+	<Content id="content" name="content" class="java.lang.String" init="false" factory="none">
+		<Size>58982400</Size>
+		<Format>video/mpg4</Format>
+		<Copyright>None</Copyright>
+		<Bitrate>262144</Bitrate>
+		<Width>640</Width>
+		<Height>480</Height>
+		<Title>Javaone Keynote</Title>
+		<Uri>http://javaone.com/keynote.mpg</Uri>
+		<Duration>18000000</Duration>
+		<Persons>ill Gates</Persons>
+		<Persons>Steve Jobs</Persons>
+	</Content>
+	<Images id="image" name="image" class="java.awt.Image">
+		<Size>LARGE</Size>
+		<Size>SMALL</Size>
+		<Width>1024</Width>
+		<Height>768</Height>
+		<Title>Javaone Keynote</Title>
+		<Uri>http://javaone.com/keynote_large.jpg</Uri>
+	</Images>
+	<Images id="image" name="image" class="java.awt.Image">
+		<Size>LARGE</Size>
+		<Size>SMALL</Size>
+		<Width>320</Width>
+		<Height>240</Height>
+		<Title>Javaone Keynote</Title>
+		<Uri>http://javaone.com/keynote_small.jpg</Uri>
+	</Images>
+</MediaItem>

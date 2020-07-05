@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>custom error page</title>
+</head>
+<body>
+    <table border="1">
+        <h2 style="color: rebeccapurple">custom error data and page</h2>
+        <tr>
+            <td>timestamp</td>
+            <td th:text="${timestamp}"></td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td th:text="${status}"></td>
+        </tr>
+        <tr>
+            <td>error</td>
+            <td th:text="${error}"></td>
+        </tr>
+        <tr>
+            <td>message</td>
+            <td th:text="${message}"></td>
+        </tr>
+        <tr>
+            <td>path</td>
+            <td th:text="${path}"></td>
+        </tr>
+        <tr>
+            <td>custom</td>
+            <td th:text="${custom}"></td>
+        </tr>
+        <tr>
+            <td>special</td>
+            <td th:text="${special}"></td>
+        </tr>
+        <tr>
+            <td>goal</td>
+            <td th:text="${goal}"></td>
+        </tr>
+        <tr>
+            <td>ester eggs</td>
+            <td th:text="${ester_eggs}"></td>
+        </tr>
+    </table>
+</body>
+</html>

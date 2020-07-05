@@ -1,0 +1,73 @@
+spring:
+  profiles:
+    active: dev
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    servlet:
+      content-type: text/html
+    suffix: .html
+  freemarker:
+    cache: false
+    allow-request-override: false
+    allow-session-override: false
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: false
+    expose-session-attributes: false
+    suffix: .ftl
+    template-loader-path: classpath:/templates/
+  devtools:
+      restart:
+        enabled: true
+        additional-paths: scr/main/java
+  # 使用fastjson时需要设置响应编码，防止中文乱码
+  http:
+    encoding:
+      force-response: true
+  # 自定义配置静态资源策略（过滤规则+资源位置）
+  mvc:
+    static-path-pattern: /static/**
+  resources:
+    static-locations: classpath:/static
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: utf-8
+    # 配置https协议访问
+    #ssl:
+    #key-store: cert
+    #key-alias: binvi
+    #key-store-password: hanbinwei
+
+couple:
+  users:
+    - name: binvi
+      address: China
+      favorites:
+        - lol
+        - code
+        - sleep
+    - name: lily
+      address: China
+      favorites:
+        - crayfish
+        - hotpot
+        - lipstick
+
+movie:
+  name: ice and fire songs
+  author: martin
+  price: 100
+
+
+
+
+
