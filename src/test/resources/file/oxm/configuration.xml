@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<title>
+		<font horiz-adv-x="0">
+			<name>Helveticia</name>
+			<size>36</size>
+		</font>
+	</title>
+	<body>
+		<font horiz-adv-x="1">
+			<name>Times Roman</name>
+			<size>12</size>
+		</font>
+	</body>
+	<window>
+		<width>400</width>
+		<height>200</height>
+	</window>
+	<color>
+		<red>0</red>
+		<green>50</green>
+		<blue>100</blue>
+	</color>
+	<menu>
+		<item>Times Roman</item>
+		<item>Helveticia</item>
+		<item>Goudy Old Style</item>
+	</menu>
+	<database>
+		<username>dbuser</username>
+		<password>secret</password>
+	</database>
+	<gridbag>
+		<row>0</row>
+		<row>1</row>
+		<row>2</row>
+		<row>3</row>
+	</gridbag>
+</configuration>
