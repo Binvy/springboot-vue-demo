@@ -1,7 +1,5 @@
 package com.binvi.springboot.demo03.book.javase.oxm;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -9,14 +7,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.XML;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -80,27 +73,15 @@ public class XmlToYamlConverterTest {
 			"MediaItem.Images.Size");
 
 	@Test
-	public void test() {
-		try {
-			String xml = new String(Files.readAllBytes(xmlPath));
-			System.out.println(xml);
-			JSONObject jsonObject = XML.toJSONObject(xml);
+	public void filterAndConvert() {
+		XmlToYamlConverter.filterAndConvert(xmlPath, yamlPath, keepNodes, deleteNodes);
+	}
 
-			jsonObject = filterNodes(jsonObject, keepNodes);
-			deleteNodes(jsonObject, deleteNodes);
-
-			String json = jsonObject.toString();
-			System.out.println(json);
-
-			JsonNode jsonNode = new ObjectMapper().readTree(json);
-			String yaml = new YAMLMapper().writeValueAsString(jsonNode);
-			System.out.println(yaml);
-			Files.write(yamlPath, yaml.getBytes());
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+	@Test
+	public void testFindNode() {
+		String expression = "MediaItem/Content/Copyright";
+		String result = converter.findNode(expression);
+		Assert.assertEquals(result, "None");
 	}
 
 	/**
@@ -116,35 +97,60 @@ public class XmlToYamlConverterTest {
 		return dest;
 	}
 
+	/**
+	 * 根据表达式过滤节点
+	 * @param src 源对象
+	 * @param dest 目标对象
+	 * @param exp 节点表达式
+	 */
 	private void filterNode(Object src, Object dest, String exp) {
-		if (src == null || StringUtils.isEmpty(exp) ) {
-			return;
-		}
 		String[] tags = exp.split("\\.");
 		String tag;
 		boolean last;
 		for (int i = 0; i < tags.length; i++) {
 			tag = tags[i];
 			last = i == tags.length - 1;
-			copyTag(src, dest, tag, last);
+			copyNodeByTag(src, dest, tag, last);
 			if (!last) {
-				if (src instanceof JSONObject) {
-					src = ((JSONObject) src).get(tag);
-				}
-				if (dest instanceof JSONObject) {
-					dest = ((JSONObject) dest).get(tag);
-				}
+				src = getChildNodeByTag(src, tag);
+				dest = getChildNodeByTag(dest, tag);
 			}
 		}
 	}
 
-	private void copyTag(Object src, Object dest, String tag, boolean last) {
+	/**
+	 * 获取指定节点下，指定名称的子节点
+	 * @param node 节点对象
+	 * @param tag 子节点名称
+	 * @return 子节点
+	 */
+	private Object getChildNodeByTag(Object node, String tag) {
+		if (node instanceof JSONObject) {
+			return ((JSONObject) node).opt(tag);
+		} else if (node instanceof JSONArray) {
+			JSONArray jsonArray = new JSONArray();
+			for (int i = 0; i < ((JSONArray) node).length(); i++) {
+				jsonArray.put(getChildNodeByTag(((JSONArray) node).get(i), tag));
+			}
+			return jsonArray;
+		}
+		return null;
+	}
+
+	/**
+	 * 根据节点名称复制xml节点
+	 * @param src 源节点
+	 * @param dest 目标节点
+	 * @param tag 节点名称
+	 * @param last 是否为最终要保留的节点
+	 */
+	private void copyNodeByTag(Object src, Object dest, String tag, boolean last) {
 		if (last) {
 			if (src instanceof JSONObject) {
 				((JSONObject)dest).put(tag, ((JSONObject) src).opt(tag));
 			} else if (src instanceof JSONArray) {
 				for (int i = 0; i < ((JSONArray) src).length(); i++) {
-					copyTag(((JSONArray) src).get(i), ((JSONArray) dest).get(i), tag, last);
+					copyNodeByTag(((JSONArray) src).opt(i), ((JSONArray) dest).opt(i), tag, last);
 				}
 			}
 		} else {
@@ -170,7 +176,7 @@ public class XmlToYamlConverterTest {
 				}
 			} else if (src instanceof JSONArray) {
 				for (int i = 0; i < ((JSONArray) src).length(); i++) {
-					copyTag(((JSONArray) src).get(i), ((JSONArray) dest).get(i), tag, last);
+					copyNodeByTag(((JSONArray) src).get(i), ((JSONArray) dest).get(i), tag, last);
 				}
 			}
 		}
@@ -223,13 +229,6 @@ public class XmlToYamlConverterTest {
 				}
 			}
 		}
-	}
-
-	@Test
-	public void testFindNode() {
-		String expression = "MediaItem/Content/Copyright";
-		String result = converter.findNode(expression);
-		Assert.assertEquals(result, "None");
 	}
 
 }
