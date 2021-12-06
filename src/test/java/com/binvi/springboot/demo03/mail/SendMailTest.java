@@ -1,5 +1,9 @@
 package com.binvi.springboot.demo03.mail;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+
 import com.binvi.springboot.demo03.entity.Message;
 import com.binvi.springboot.demo03.service.MailService;
 import freemarker.template.Configuration;
@@ -7,15 +11,12 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @author binvi
@@ -32,7 +33,7 @@ public class SendMailTest {
 	@Autowired
 	TemplateEngine templateEngine;
 
-	private static final String FROM = "1140932775@qq.com";
+	private static final String FROM = "hanbinwei@zhuanzhuan.com";
 	private static final String TO = "13752330376@163.com";
 	private static final String CC = "413483557@qq.com";
 
